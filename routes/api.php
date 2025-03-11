@@ -7,6 +7,7 @@ use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\BudgetController;
 use App\Http\Controllers\API\EmployeeController;
 use App\Http\Controllers\API\SecurityAlertController;
+use App\Http\Controllers\API\DashboardController;
 
 // Public routes
 Route::post('/register', [AuthController::class, 'register']);
@@ -17,6 +18,9 @@ Route::middleware('auth:sanctum')->group(function () {
     // Auth routes
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/profile', [AuthController::class, 'profile']);
+
+    // Dashboard Module (System Overview)
+    Route::get('/dashboard', [DashboardController::class, 'getSystemOverview']);
 
     // Sales Module (Orders)
     Route::middleware('role:admin,sales')->group(function () {

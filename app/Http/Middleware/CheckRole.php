@@ -21,12 +21,14 @@ class CheckRole
             return response()->json(['message' => 'Unauthenticated.'], 401);
         }
 
+        $userRoles = $request->user()->roles->pluck('name')->toArray();
+
         foreach ($roles as $role) {
-            if ($request->user()->hasRole($role)) {
+            if (in_array($role, $userRoles)) {
                 return $next($request);
             }
         }
 
-        return response()->json(['message' => 'You do not have permission to access this resource.'], 403);
+        return response()->json(['message' => 'Unauthorized. Insufficient permissions.'], 403);
     }
 }
